@@ -9,6 +9,17 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { THEME_STORAGE_KEY } from "~/lib/theme";
+
+const themeInitScript = `(function() {
+  try {
+    var stored = localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});
+    var theme = stored === "light" || stored === "dark" ? stored : "system";
+    var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var resolved = theme === "system" ? (systemDark ? "dark" : "light") : theme;
+    document.documentElement.classList.toggle("dark", resolved === "dark");
+  } catch (e) {}
+})();`;
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -25,12 +36,13 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
         {children}

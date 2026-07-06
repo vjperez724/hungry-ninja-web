@@ -29,6 +29,7 @@ This is a React Router 8 **Framework Mode** app (SSR by default, see `ssr: true`
 When asked to implement a GitHub issue, always:
 
 - Fetch the issue first and read it in full before writing any code.
+- All branches should be based on main.  Make sure main is up to date before starting work.
 - Follow all acceptance criteria.
 - If anything is ambiguous, ask rather than guess.
 - Use a new branch for development, following the pattern `<issue-number>-<issue-title>`.
