@@ -34,6 +34,16 @@ When asked to implement a GitHub issue, always:
 - If anything is ambiguous, ask rather than guess.
 - Use a new branch for development, following the pattern `<issue-number>-<issue-title>`.
 
+## Backend API
+
+The backend is a separate repository: `vjperez724/hungry-ninja-api` (FastAPI, Python 3.13, SQLModel, Auth0-authenticated). This repo has no local copy of it — retrieve endpoint and data-model context on demand via GitHub tooling (e.g. the GitHub MCP server's `get_file_contents` / `search_code`), always against its `main` branch, never a feature branch or PR ref. This keeps answers grounded in merged, reviewed backend code rather than in-progress work.
+
+Where to look for what, in that repo:
+
+- `app/routes/` — endpoints (one `APIRouter` per resource)
+- `app/models/` — request/response DTOs (the API boundary shape; rely on these, not the internal `app/data` table models, for what the frontend can expect)
+- `AGENTS.md` — architecture overview (layering, auth, LLM-suggestion flow, etc.)
+
 ## React Router skill
 
 A React Router skill lives at `.agents/skills/react-router/SKILL.md` with mode-specific references under `.agents/skills/react-router/references/`. This app is in **Framework Mode** — consult `references/framework-mode.md` for routing, loaders/actions, and SSR/SPA/pre-rendering questions. The skill also points to `node_modules/react-router/docs/` as the version-matched source of truth.
