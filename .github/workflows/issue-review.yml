@@ -1,0 +1,33 @@
+name: Issue Ambiguity Review
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: |
+            --max-turns 15
+          prompt: |
+            Review the GitHub issue that triggered this workflow (#${{ github.event.issue.number }}) for ambiguity before implementation begins.
+
+            Check for:
+            - Vague or missing acceptance criteria
+            - Undefined terms or unclear scope
+            - Missing technical constraints needed to implement it
+            - Conflicting or incomplete requirements
+
+            Then:
+            1. Post a single comment on the issue summarizing what you found. If nothing is ambiguous, say so briefly - don't invent nitpicks.
+            2. Only if you found ambiguity worth resolving before implementation, apply the `needs-clarification` label to the issue.
