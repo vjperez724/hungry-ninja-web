@@ -47,3 +47,7 @@ Where to look for what, in that repo:
 ## React Router skill
 
 A React Router skill lives at `.agents/skills/react-router/SKILL.md` with mode-specific references under `.agents/skills/react-router/references/`. This app is in **Framework Mode** — consult `references/framework-mode.md` for routing, loaders/actions, and SSR/SPA/pre-rendering questions. The skill also points to `node_modules/react-router/docs/` as the version-matched source of truth.
+
+## Auth0 React skill
+
+An Auth0 skill for React SPAs lives at `.agents/skills/auth0-react/SKILL.md`, covering `@auth0/auth0-react` setup (`Auth0Provider`, login/logout, protected routes, token/session access) — consult it before adding or modifying authentication in this app. Detailed references live under `.agents/skills/auth0-react/references/`: `setup.md` (env/config, Auth0 CLI scripts), `integration.md` (protected routes, API calls, error handling), and `api.md` (full hook/SDK reference).
