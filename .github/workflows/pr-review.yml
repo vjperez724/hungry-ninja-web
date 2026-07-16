@@ -10,7 +10,7 @@ on:
       pr_number:
         description: PR number to review
         required: true
-        type: number
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.inputs.pr_number || github.event.pull_request.number }}
@@ -22,7 +22,8 @@ permissions:
   id-token: write
 
 jobs:
-  review:
+  pr_review:
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Determine PR number
