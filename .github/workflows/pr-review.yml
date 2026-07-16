@@ -48,3 +48,4 @@ jobs:
             Review this pull request for bugs, edge cases and how it satisfies the acceptance criteria of the related issue.
             Leave a comment with any issues found.
             Do not approve or merge under any circumstances.  Your role is to leave comments only.
+          show_full_output: true
