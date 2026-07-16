@@ -1,0 +1,50 @@
+name: PR Review
+
+on:
+  pull_request:
+    types: [opened]
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number to review
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.pr_number || github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  pull-requests: write
+  contents: read
+  id-token: write
+
+jobs:
+  pr_review:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine PR number
+        id: pr
+        run: echo "number=${{ github.event.inputs.pr_number || github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v5
+        with:
+          ref: refs/pull/${{ steps.pr.outputs.number }}/merge
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          claude_args: |
+              --max-turns 15
+              --allowedTools "Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh issue view:*)"
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR_NUMBER: ${{ steps.pr.outputs.number }}
+
+            Review this pull request for bugs, edge cases and how it satisfies the acceptance criteria of the related issue.
+            Leave a comment with any issues found.
+            Do not approve or merge under any circumstances.  Your role is to leave comments only.
