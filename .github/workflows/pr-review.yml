@@ -45,6 +45,8 @@ jobs:
             REPO: ${{ github.repository }}
             PR_NUMBER: ${{ steps.pr.outputs.number }}
 
+            The PR's code is already checked out in the current working directory (its merge ref) - do not git fetch or git checkout it yourself.
+
             Review this pull request for bugs, edge cases and how it satisfies the acceptance criteria of the related issue.
             Leave a comment with any issues found.
             Do not approve or merge under any circumstances.  Your role is to leave comments only.
