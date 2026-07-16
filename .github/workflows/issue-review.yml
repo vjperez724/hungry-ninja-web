@@ -43,4 +43,3 @@ jobs:
             Then:
             1. Post a single comment on the issue summarizing what you found. If nothing is ambiguous, say so briefly - don't invent nitpicks.
             2. Only if you found ambiguity worth resolving before implementation, apply the `needs-clarification` label to the issue.
-          show_full_output: true        
